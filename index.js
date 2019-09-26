@@ -86,7 +86,7 @@ db.once('open', function callback(){
 });
 
 // DEFINE MODEL
-var Books = require('./models/books');
+//var Books = require('./models/books');
 let songSchema = mongoose.Schema({
   decade: String,
   artist: String,
