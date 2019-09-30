@@ -4,13 +4,16 @@ const path = require('path')
 const mongoose = require('mongoose')
 const PORT = process.env.PORT || 5000
 
+const Song = require('./models/songs');
+
 const uri = process.env.MONGODB_URI
 mongoose.connect(uri);
 
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', function callback(){
-  // Create song schema
+  
+  /*// Create song schema
   let songSchema = mongoose.Schema({
     decade: String,
     artist: String,
@@ -20,7 +23,7 @@ db.once('open', function callback(){
 
   // Store song documents in a collection called "songs"
   let Song = mongoose.model('songs', songSchema);
-
+*/
   // Create seed data
   let seventies = new Song({
     decade: '1970s',
