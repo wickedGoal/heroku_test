@@ -1,11 +1,11 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
-var Schema   = mongoose.Schema;
+var Schema = mongoose.Schema;
 
 var booksSchema = new Schema({
-  title : String,
+  title: String,
   author: String,
-  price : Number
+  price: Number
 });
 
 // Create song schema
@@ -19,6 +19,4 @@ let songSchema = mongoose.Schema({
 // Store song documents in a collection called "songs"
 //let Song = mongoose.model('songs', songSchema);
 
-
-
-module.exports = mongoose.model('songs', songSchema);
+module.exports = mongoose.model("songs", songSchema);
