@@ -92,10 +92,11 @@ db.once('open', function callback(){
 //var Books = require('./models/books');
 
 express()
-  .use(express.static(path.join(__dirname, 'public')))
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
+  //.use(express.static(path.join(__dirname, 'public')))
+  .use(express.static(path.join(__dirname, 'client/build')))
+  //.set('views', path.join(__dirname, 'views'))
+  //.set('view engine', 'ejs')
+  .get('/', (req, res) => res.render('client/build/index'))
   .get('/cool', (req,res) => res.send(cool()))
   .get('/times', (req, res) => res.send(showTimes()))
 
