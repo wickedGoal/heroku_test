@@ -87,15 +87,6 @@ db.once('open', function callback(){
 
 // DEFINE MODEL
 //var Books = require('./models/books');
-let songSchema = mongoose.Schema({
-  decade: String,
-  artist: String,
-  song: String,
-  weeksAtOne: Number
-});
-
-let Song = mongoose.model('songs', songSchema);
-
 
 express()
   .use(express.static(path.join(__dirname, 'public')))
