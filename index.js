@@ -35,6 +35,11 @@ express()
   .use(express.static(path.join(__dirname, 'client/build')))
   .get('/', (req, res) => res.render('client/build/index'))
   
+
+  // [CONFIGURE ROUTER]
+  var router = require('./routes')(app);
+
+
   //cool function deleted
   //.get('/cool', (req,res) => res.send(cool()))
 
