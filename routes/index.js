@@ -13,16 +13,16 @@ module.exports = function(app) {
     });
 
     // GET SINGLE BOOK
-    /*
-    app.get('/api/books/:book_id', function(req, res){
-        Book.findOne({_id: req.params.book_id}, function(err, book){
+    
+    app.get('/api/kmles/:Part', function(req, res){
+        Kmle.findOne({Part: req.params.Part}, function(err, kmles){
             if(err) return res.status(500).json({error: err});
-            if(!book) return res.status(404).json({error: 'book not found'});
-            res.json(book);
+            if(!kmles) return res.status(404).json({error: 'Part not found'});
+            res.json(kmles);
         })
     });
     
-
+/*
     // GET BOOK BY AUTHOR
     app.get('/api/books/author/:author', function(req, res){
         Book.find({author: req.params.author}, {_id: 0, title: 1, published_date: 1},  function(err, books){
@@ -55,11 +55,11 @@ module.exports = function(app) {
 
     // UPDATE THE BOOK with new log
     app.put('/api/kmles/:Part/:Chapter', function(req, res){
-        Kmle.update({ _id: req.params.part_id }, { $set: req.body }, function(err, output){
+        Kmle.update({ Part: req.params.Part, Chapter: req.params.Chapter }, { $set: req.body }, function(err, output){
             if(err) res.status(500).json({ error: 'database failure' });
             console.log(output);
-            if(!output.n) return res.status(404).json({ error: 'book not found' });
-            res.json( { message: 'book updated' } );
+            if(!output.n) return res.status(404).json({ error: 'Chapter not found' });
+            res.json( { message: 'Log updated' } );
         })
     /* [ ANOTHER WAY TO UPDATE THE BOOK ]
             Book.findById(req.params.book_id, function(err, book){
