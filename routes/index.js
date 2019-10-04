@@ -57,6 +57,7 @@ module.exports = function(app) {
     Kmle.updateOne(
       { Part: req.params.Part, Chapter: req.params.Chapter },
       { $push: {"Logs.$": req.body} },
+      { setDefaultsOnInsert: true}, //Options : insert logTime on default
       function(err, output) {
         if (err) {
           res.status(500).json({ error: "database failure" });
