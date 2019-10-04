@@ -58,8 +58,11 @@ module.exports = function(app) {
       { Part: req.params.Part, Chapter: req.params.Chapter },
       { $push: {"Logs.$": req.body} },
       function(err, output) {
-        if (err) res.status(500).json({ error: "database failure" });
-        console.log(output);
+        if (err) {
+          res.status(500).json({ error: "database failure" });
+          console.log(output);
+          return;
+        }
         if (!output.n)
           return res.status(404).json({ error: "Chapter not found" });
         res.json({ message: "Log updated" });
