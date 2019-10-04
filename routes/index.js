@@ -52,11 +52,11 @@ module.exports = function(app) {
     });
     */
 
-  // UPDATE THE BOOK with new log
+  // UPDATE THE BOOK with new log, req.body = logTime, userId
   app.put("/api/kmles/:Part/:Chapter", function(req, res) {
     Kmle.update(
       { Part: req.params.Part, Chapter: req.params.Chapter },
-      { $set: req.body },
+      { $push: {"Logs.$": req.body} },
       function(err, output) {
         if (err) res.status(500).json({ error: "database failure" });
         console.log(output);
@@ -106,6 +106,8 @@ module.exports = function(app) {
 
   // Add Question
   app.post("/api/questions", function(req, res) {
+    var question = new Question(req.body);
+    /*
     var question = new Question();
     question.Part = req.body.Part;
     question.PartName = req.body.PartName;
@@ -116,7 +118,7 @@ module.exports = function(app) {
     question.Comment1 = req.body.Comment1;
     question.Comment2 = req.body.Comment2;
     question.Logs = { logTime: Date.now(), userId: req.body.userId };
-
+*/
     question.save(function(err) {
       if (err) {
         console.error(err);
