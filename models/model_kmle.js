@@ -7,7 +7,7 @@ var kmleSchema = new Schema({
   PartName:String,
   Chapter: Number,
   ChapName: String,
-  Logs: [{logTime:{type:Date, default:Date.Now}, userId:Number}]
+  Logs: [{logTime:{type:Date, default:Date.now}, userId:Number}]
 });
 
 
@@ -21,7 +21,7 @@ let questionSchema = new Schema({
   ChapName: String,
   Comment1: String,
   Comment2: String,
-  Logs: [{logTime:{type:Date, default:Date.Now}, userId:Number}]
+  Logs: [{logTime:{type:Date, default:Date.now}, userId:Number}]
 });
 
 // Store song documents in a collection called "songs"

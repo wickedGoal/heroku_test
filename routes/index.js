@@ -56,7 +56,8 @@ module.exports = function(app) {
   app.put("/api/kmles/:Part/:Chapter", function(req, res) {
     Kmle.updateOne(
       { Part: req.params.Part, Chapter: req.params.Chapter },
-      { $push: {"Logs.$": req.body} },
+      { $push: {"Logs.$.logTime": req.body.logTime,
+                "Logs.$.userId":1 } },
       { setDefaultsOnInsert: true}, //Options : insert logTime on default
       function(err, output) {
         if (err) {
