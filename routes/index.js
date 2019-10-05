@@ -6,7 +6,7 @@ module.exports = function(app) {
   // GET ALL BOOKS
   app.get("/api/kmles", function(req, res) {
     Kmle.find({})
-      .sort("Part, Chapter")
+      .sort({ Part: 1, Chapter: 1 })
       .exec(function(err, kmles) {
         if (err) return res.status(500).send({ error: "database failure" });
         res.json(kmles);
@@ -17,7 +17,7 @@ module.exports = function(app) {
 
   app.get("/api/kmles/:Part", function(req, res) {
     Kmle.find({ Part: req.params.Part })
-      .sort("Chapter")
+      .sort({ Chapter: 1 })
       .exec(function(err, kmles) {
         if (err) return res.status(500).json({ error: err });
         if (!kmles) return res.status(404).json({ error: "Part not found" });
@@ -140,7 +140,7 @@ module.exports = function(app) {
   // Get Question
   app.get("/api/questions", function(req, res) {
     Question.find({})
-      .sort("Part, Chapter")
+      .sort({ Part: 1, Chapter: 1 })
       .exec(function(err, questions) {
         if (err) return res.status(500).send({ error: "database failure" });
         res.json(questions);
@@ -150,7 +150,7 @@ module.exports = function(app) {
   // Get Question
   app.get("/api/questions/:Part", function(req, res) {
     Question.find({ Part: req.params.Part })
-      .sort("Chapter")
+      .sort({ Chapter: 1 })
       .exec(function(err, questions) {
         if (err) return res.status(500).send({ error: "database failure" });
         res.json(questions);
