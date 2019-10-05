@@ -74,8 +74,7 @@ module.exports = function(app) {
       { Part: req.params.Part, Chapter: req.params.Chapter },
       {
         $push: {
-          "Logs.$.logTime": req.body.logTime,
-          "Logs.$.userId": req.body.userId
+          "$.Logs": req.body
         }
       },
       { setDefaultsOnInsert: true }, //Options : insert logTime on default
@@ -109,7 +108,7 @@ module.exports = function(app) {
   app.delete("/api/kmles/:Part/:Chapter", function(req, res) {
     Kmle.updateOne(
       { Part: req.params.Part, Chapter: req.params.Chapter },
-      { $pull: { "Logs.$._id": req.body._id } },
+      { $pull: { "$.Logs._id": req.body._id } },
       function(err, output) {
         if (err) {
           res.status(500).json({ error: "database failure" });
