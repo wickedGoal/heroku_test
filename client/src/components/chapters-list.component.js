@@ -37,8 +37,10 @@ export default class ChaptersList extends Component {
 
   render() {
     return (
-      // <ChapDisplay list={this.state} />
-      <div>
+      <ChapDisplay lists={this.state.chapters} />
+
+      /*
+    <div>
         <h3> Checklist </h3>
         <table className="table table-striped" style={{ marginTop: 20 }}>
           <thead>
@@ -54,6 +56,7 @@ export default class ChaptersList extends Component {
 
         <p>Welcome to Todos List Component!!</p>
       </div>
+      */
     );
   }
 }
