@@ -4,29 +4,28 @@ var Schema = mongoose.Schema;
 
 var kmleSchema = new Schema({
   Part: Number,
-  PartName:String,
+  PartName: String,
   Chapter: Number,
   ChapName: String,
-  Logs: [{logTime:{type:Date, default:Date.now}, userId:Number}]
+  Logs: [{ logTime: { type: Date, default: Date.now }, userId: Number }]
 });
 
-
-// Create song schema
+// Create question schema
 let questionSchema = new Schema({
   Question: String,
   Answer: String,
   Part: Number,
-  PartName:String,
+  PartName: String,
   Chapter: Number,
   ChapName: String,
   Comment1: String,
   Comment2: String,
-  Logs: [{logTime:{type:Date, default:Date.now}, userId:Number}]
+  Logs: [{ logTime: { type: Date, default: Date.now }, userId: Number }]
 });
 
 // Store song documents in a collection called "songs"
 
 module.exports = {
-  Kmle : mongoose.model("Kmle", kmleSchema),
+  Kmle: mongoose.model("Kmle", kmleSchema),
   Question: mongoose.model("Question", questionSchema)
-}
+};
