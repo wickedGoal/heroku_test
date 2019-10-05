@@ -5,20 +5,36 @@ var Question = Kmles.Question;
 module.exports = function(app) {
   // GET ALL BOOKS
   app.get("/api/kmles", function(req, res) {
-    Kmle.find(function(err, kmles) {
-      if (err) return res.status(500).send({ error: "database failure" });
-      res.json(kmles);
-    });
+    Kmle.find({})
+      .sort("Part, Chapter")
+      .exec(function(err, kmles) {
+        if (err) return res.status(500).send({ error: "database failure" });
+        res.json(kmles);
+      });
   });
 
   // GET Part BOOKs
 
   app.get("/api/kmles/:Part", function(req, res) {
-    Kmle.find({ Part: req.params.Part }, function(err, kmles) {
-      if (err) return res.status(500).json({ error: err });
-      if (!kmles) return res.status(404).json({ error: "Part not found" });
-      res.json(kmles);
-    });
+    Kmle.find({ Part: req.params.Part })
+      .sort("Chapter")
+      .exec(function(err, kmles) {
+        if (err) return res.status(500).json({ error: err });
+        if (!kmles) return res.status(404).json({ error: "Part not found" });
+        res.json(kmles);
+      });
+  });
+
+  // GET Part BOOKs
+
+  app.get("/api/kmles/:Part/:Chapter", function(req, res) {
+    Kmle.find({ Part: req.params.Part, Chapter: req.params.Chapter }).exec(
+      function(err, kmles) {
+        if (err) return res.status(500).json({ error: err });
+        if (!kmles) return res.status(404).json({ error: "Part not found" });
+        res.json(kmles);
+      }
+    );
   });
 
   /*
@@ -56,9 +72,13 @@ module.exports = function(app) {
   app.put("/api/kmles/:Part/:Chapter", function(req, res) {
     Kmle.updateOne(
       { Part: req.params.Part, Chapter: req.params.Chapter },
-      { $push: {"Logs.$.logTime": req.body.logTime,
-                "Logs.$.userId":1 } },
-      { setDefaultsOnInsert: true}, //Options : insert logTime on default
+      {
+        $push: {
+          "Logs.$.logTime": req.body.logTime,
+          "Logs.$.userId": req.body.userId
+        }
+      },
+      { setDefaultsOnInsert: true }, //Options : insert logTime on default
       function(err, output) {
         if (err) {
           res.status(500).json({ error: "database failure" });
@@ -85,9 +105,26 @@ module.exports = function(app) {
     */
   });
 
+  // DELETE THE  log, req.body = logTime, userId
+  app.delete("/api/kmles/:Part/:Chapter", function(req, res) {
+    Kmle.updateOne(
+      { Part: req.params.Part, Chapter: req.params.Chapter },
+      { $pull: { "Logs.$._id": req.body._id } },
+      function(err, output) {
+        if (err) {
+          res.status(500).json({ error: "database failure" });
+          console.log(output);
+          return;
+        }
+        if (!output.n)
+          return res.status(404).json({ error: "Chapter not found" });
+        res.json({ message: "Log updated" });
+      }
+    );
+  });
   // DELETE BOOK
   /*
-    app.delete('/api/books/:book_id', function(req, res){
+    app.delete('/api/kmles/:book_id', function(req, res){
         Book.remove({ _id: req.params.book_id }, function(err, output){
             if(err) return res.status(500).json({ error: "database failure" });
 
@@ -103,10 +140,32 @@ module.exports = function(app) {
 
   // Get Question
   app.get("/api/questions", function(req, res) {
-    Question.find(function(err, questions) {
-      if (err) return res.status(500).send({ error: "database failure" });
-      res.json(questions);
-    });
+    Question.find({})
+      .sort("Part, Chapter")
+      .exec(function(err, questions) {
+        if (err) return res.status(500).send({ error: "database failure" });
+        res.json(questions);
+      });
+  });
+
+  // Get Question
+  app.get("/api/questions/:Part", function(req, res) {
+    Question.find({ Part: req.params.Part })
+      .sort("Chapter")
+      .exec(function(err, questions) {
+        if (err) return res.status(500).send({ error: "database failure" });
+        res.json(questions);
+      });
+  });
+
+  // Get Question
+  app.get("/api/questions/:Part/:Chapter", function(req, res) {
+    Question.find({ Part: req.params.Part, Chapter: req.params.Chapter }).exec(
+      function(err, questions) {
+        if (err) return res.status(500).send({ error: "database failure" });
+        res.json(questions);
+      }
+    );
   });
 
   // Add Question
@@ -131,6 +190,20 @@ module.exports = function(app) {
         return;
       }
       res.json({ result: 1 });
+    });
+  });
+
+  //Delete Question
+  app.delete("/api/questions", function(req, res) {
+    Question.deleteOne({ _id: req.body._id }, function(err, output) {
+      if (err) return res.status(500).json({ error: "database failure" });
+
+      // ( SINCE DELETE OPERATION IS IDEMPOTENT, NO NEED TO SPECIFY )
+      //if(!output.result.n) return res.status(404).json({ error: "book not found" });
+      //res.json({ message: "book deleted" });
+      //
+
+      res.status(204).end();
     });
   });
 };
