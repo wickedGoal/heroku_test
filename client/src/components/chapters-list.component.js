@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import ChapDisplay from "./ChapDisplay";
 
 const Chapter = props => (
   <tr>
@@ -11,6 +12,7 @@ const Chapter = props => (
   </tr>
 );
 
+//Act as a container
 export default class ChaptersList extends Component {
   constructor(props) {
     super(props);
@@ -35,6 +37,7 @@ export default class ChaptersList extends Component {
 
   render() {
     return (
+      // <ChapDisplay list={this.state} />
       <div>
         <h3> Checklist </h3>
         <table className="table table-striped" style={{ marginTop: 20 }}>
