@@ -77,8 +77,7 @@ module.exports = function(app) {
           "Logs.$": req.body
         }
       },
-      { upsert: true },
-      { setDefaultsOnInsert: true }, //Options : insert logTime on default
+      { upsert: true, setDefaultsOnInsert: true }, //Options : insert logTime on default
       function(err, output) {
         if (err) {
           res.status(500).json({ error: "database failure" });
