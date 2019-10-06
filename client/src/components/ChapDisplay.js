@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { Collapse, CardBody, Card, CardHeader } from "reactstrap";
+import {
+  Collapse,
+  CardBody,
+  Card,
+  CardHeader,
+  ListGroup,
+  ListGroupItem
+} from "reactstrap";
+
+import ListGroupDisplay from "./ListGroupDisplay";
 
 class ChapDisplay extends Component {
   constructor(props) {
@@ -26,18 +35,15 @@ class ChapDisplay extends Component {
     return (
       <div className="container">
         <h3 className="page-header">KMLE Chapters</h3>
-        {cards.map(index => {
+        {lists.map(curPart => {
           return (
-            <Card style={{ marginBottom: "1rem" }} key={index}>
-              <CardHeader onClick={this.toggle} data-event={index}>
-                Header{index}
+            <Card style={{ marginBottom: "1rem" }} key={curPart.part_id}>
+              <CardHeader onClick={this.toggle} data-event={curPart.part_id}>
+                {curPart.part_id}. {curPart.part_name}
               </CardHeader>
-              <Collapse isOpen={collapse === index}>
+              <Collapse isOpen={collapse === curPart.part_id}>
                 <CardBody>
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life
-                  accusamus terry richardson ad squid. Nihil anim keffiyeh
-                  helvetica, craft beer labore wes anderson cred nesciunt
-                  sapiente ea proident.
+                  <ListGroupDisplay lists={curPart.chapter} />
                 </CardBody>
               </Collapse>
             </Card>

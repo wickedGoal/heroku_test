@@ -74,7 +74,9 @@ module.exports = function(app) {
     Kmle.updateOne(
       { part_id: 1, "chapter.chap_id": 1 },
       {
-        $push: { "chapter.logs": { $each: [req.body], $sort: { log_time: 1 } } }
+        $push: {
+          "chapter.$.logs": { $each: [req.body], $sort: { log_time: 1 } }
+        }
       },
       { setDefaultsOnInsert: true }, //Options : insert logTime on default
       function(err, output) {
@@ -109,7 +111,7 @@ module.exports = function(app) {
       { part_id: req.params.part_id, "chapter.chap_id": req.params.chap_id },
       {
         $pull: {
-          "chapter.logs": { _id: req.body._id }
+          "chapter.$.logs": { _id: req.body._id }
         }
       },
       function(err, output) {
