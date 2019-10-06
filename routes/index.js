@@ -6,18 +6,18 @@ module.exports = function(app) {
   // GET ALL BOOKS
   app.get("/api/kmles", function(req, res) {
     Kmle.find({})
-      .sort({ Part: 1, Chapter: 1 })
+      .sort({ part_id: 1, "chapter.chap_id": 1 })
       .exec(function(err, kmles) {
         if (err) return res.status(500).send({ error: "database failure" });
         res.json(kmles);
       });
   });
 
-  // GET Part BOOKs
+  // GET part_id BOOKs
 
-  app.get("/api/kmles/:Part", function(req, res) {
-    Kmle.find({ Part: req.params.Part })
-      .sort({ Chapter: 1 })
+  app.get("/api/kmles/:part_id", function(req, res) {
+    Kmle.find({ part_id: req.params.part_id })
+      .sort({ "chapter.chap_id": 1 })
       .exec(function(err, kmles) {
         if (err) return res.status(500).json({ error: err });
         if (!kmles) return res.status(404).json({ error: "Part not found" });
@@ -25,16 +25,17 @@ module.exports = function(app) {
       });
   });
 
-  // GET Part BOOKs
+  // GET part_id BOOKs
 
-  app.get("/api/kmles/:Part/:Chapter", function(req, res) {
-    Kmle.find({ Part: req.params.Part, Chapter: req.params.Chapter }).exec(
-      function(err, kmles) {
-        if (err) return res.status(500).json({ error: err });
-        if (!kmles) return res.status(404).json({ error: "Part not found" });
-        res.json(kmles);
-      }
-    );
+  app.get("/api/kmles/:part_id/:chap_id", function(req, res) {
+    Kmle.find({
+      part_id: req.params.part_id,
+      "chapter.chap_id": req.params.chap_id
+    }).exec(function(err, kmles) {
+      if (err) return res.status(500).json({ error: err });
+      if (!kmles) return res.status(404).json({ error: "Part not found" });
+      res.json(kmles);
+    });
   });
 
   /*
@@ -69,13 +70,11 @@ module.exports = function(app) {
     */
 
   // UPDATE THE BOOK with new log, req.body = logTime, userId
-  app.put("/api/kmles/:Part/:Chapter", function(req, res) {
+  app.put("/api/kmles/:part_id/:chap_id", function(req, res) {
     Kmle.updateOne(
-      { Part: req.params.Part, Chapter: req.params.Chapter },
+      { part_id: 1, "chapter.chap_id": 1 },
       {
-        $push: {
-          Logs: req.body
-        }
+        $push: { "chapter.logs": { $each: [req.body], $sort: { log_time: 1 } } }
       },
       { setDefaultsOnInsert: true }, //Options : insert logTime on default
       function(err, output) {
@@ -105,10 +104,17 @@ module.exports = function(app) {
   });
 
   // DELETE THE  log, req.body = logTime, userId
-  app.delete("/api/kmles/:Part/:Chapter", function(req, res) {
+  app.delete("/api/kmles/:part_id/:chap_id", function(req, res) {
     Kmle.updateOne(
-      { Part: req.params.Part, Chapter: req.params.Chapter },
-      { $pull: { Logs: { _id: req.body._id } } },
+      { part_id: req.params.part_id, "chapter.chap_id": req.params.chap_id },
+      {
+        $pull: {
+          "chapter.logs": {
+            log_time: req.body.log_time,
+            user_id: erq.body.user_id
+          }
+        }
+      },
       function(err, output) {
         if (err) {
           res.status(500).json({ error: "database failure" });
@@ -140,7 +146,7 @@ module.exports = function(app) {
   // Get Question
   app.get("/api/questions", function(req, res) {
     Question.find({})
-      .sort({ Part: 1, Chapter: 1 })
+      .sort({ part_id: 1, chap_id: 1 })
       .exec(function(err, questions) {
         if (err) return res.status(500).send({ error: "database failure" });
         res.json(questions);
@@ -148,9 +154,9 @@ module.exports = function(app) {
   });
 
   // Get Question
-  app.get("/api/questions/:Part", function(req, res) {
-    Question.find({ Part: req.params.Part })
-      .sort({ Chapter: 1 })
+  app.get("/api/questions/:part_id", function(req, res) {
+    Question.find({ part_id: req.params.part_id })
+      .sort({ chap_id: 1 })
       .exec(function(err, questions) {
         if (err) return res.status(500).send({ error: "database failure" });
         res.json(questions);
@@ -158,13 +164,14 @@ module.exports = function(app) {
   });
 
   // Get Question
-  app.get("/api/questions/:Part/:Chapter", function(req, res) {
-    Question.find({ Part: req.params.Part, Chapter: req.params.Chapter }).exec(
-      function(err, questions) {
-        if (err) return res.status(500).send({ error: "database failure" });
-        res.json(questions);
-      }
-    );
+  app.get("/api/questions/:part_id/:chap_id", function(req, res) {
+    Question.find({
+      part_id: req.params.part_id,
+      chap_id: req.params.chap_id
+    }).exec(function(err, questions) {
+      if (err) return res.status(500).send({ error: "database failure" });
+      res.json(questions);
+    });
   });
 
   // Add Question
@@ -172,15 +179,15 @@ module.exports = function(app) {
     var question = new Question(req.body);
     /*
     var question = new Question();
-    question.Part = req.body.Part;
-    question.PartName = req.body.PartName;
-    question.Chapter = req.body.Chapter;
+    question.part_id = req.body.part_id;
+    question.part_name = req.body.part_name;
+    question.chap_id = req.body.chap_id;
     question.ChapName = req.body.ChapName;
     question.Question = req.body.Question;
     question.Answer = req.body.Answer;
     question.Comment1 = req.body.Comment1;
     question.Comment2 = req.body.Comment2;
-    question.Logs = { logTime: Date.now(), userId: req.body.userId };
+    question.logs = { logTime: Date.now(), userId: req.body.userId };
 */
     question.save(function(err) {
       if (err) {
