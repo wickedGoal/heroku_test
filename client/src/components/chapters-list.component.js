@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import ChapDisplay from "./ChapDisplay";
+import BoardDisplay from "./BoardDisplay";
 
 const Chapter = props => (
   <tr>
@@ -37,8 +38,10 @@ export default class ChaptersList extends Component {
 
   render() {
     return (
-      <ChapDisplay lists={this.state.chapters} />
-
+      <div>
+        <BoardDisplay />
+        <ChapDisplay lists={this.state.chapters} />
+      </div>
       /*
     <div>
         <h3> Checklist </h3>

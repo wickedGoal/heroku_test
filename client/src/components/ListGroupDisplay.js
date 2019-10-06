@@ -1,9 +1,22 @@
 import React, { Component } from "react";
-import { ListGroup, ListGroupItem } from "reactstrap";
+import { ListGroup, ListGroupItem, Badge, Tooltip } from "reactstrap";
+
+import CheckButton from "./CheckButton";
 
 class ListGroupDisplay extends Component {
   constructor(props) {
     super(props);
+
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      tooltipOpen: false
+    };
+  }
+
+  toggle() {
+    this.setState({
+      tooltipOpen: !this.state.tooltipOpen
+    });
   }
 
   _renderError = () => {
@@ -17,8 +30,16 @@ class ListGroupDisplay extends Component {
       <ListGroup>
         {lists.map(curChap => {
           return (
-            <ListGroupItem tag="a" href="#" action>
-              {curChap.chap_id}. {curChap.chap_name}
+            <ListGroupItem action>
+              {curChap.chap_id}. {curChap.chap_name}{" "}
+              {curChap.logs.length > 0 && (
+                <span>
+                  <Badge color="info"> {curChap.logs.length}</Badge>
+                </span>
+              )}
+              <span>
+                <CheckButton />
+              </span>
             </ListGroupItem>
           );
         })}

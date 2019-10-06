@@ -34,7 +34,7 @@ class ChapDisplay extends Component {
     //return posts.map(post => <div key={post.id}>{post.title}</div>);
     return (
       <div className="container">
-        <h3 className="page-header">KMLE Chapters</h3>
+        <p></p>
         {lists.map(curPart => {
           return (
             <Card style={{ marginBottom: "1rem" }} key={curPart.part_id}>
