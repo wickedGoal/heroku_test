@@ -109,10 +109,7 @@ module.exports = function(app) {
       { part_id: req.params.part_id, "chapter.chap_id": req.params.chap_id },
       {
         $pull: {
-          "chapter.logs": {
-            log_time: req.body.log_time,
-            user_id: erq.body.user_id
-          }
+          "chapter.logs._id": req.body._id
         }
       },
       function(err, output) {
