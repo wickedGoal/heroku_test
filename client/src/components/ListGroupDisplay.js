@@ -9,7 +9,8 @@ class ListGroupDisplay extends Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      tooltipOpen: false
+      tooltipOpen: false,
+      part_id: this.props.cur_part
     };
   }
 
@@ -25,12 +26,13 @@ class ListGroupDisplay extends Component {
 
   _renderPosts = () => {
     const { lists } = this.props;
+    const {part_id} = this.state;
 
     return (
       <ListGroup>
         {lists.map(curChap => {
           return (
-            <ListGroupItem action>
+            <ListGroupItem>
               {curChap.chap_id}. {curChap.chap_name}{" "}
               {curChap.logs.length > 0 && (
                 <span>
@@ -38,7 +40,7 @@ class ListGroupDisplay extends Component {
                 </span>
               )}
               <span>
-                <CheckButton />
+                <CheckButton part_id={part_id} chap_id={curChap.chap_id}/>
               </span>
             </ListGroupItem>
           );
