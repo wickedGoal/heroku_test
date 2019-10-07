@@ -5,8 +5,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
-import axios from 'axios';
-
+import axios from "axios";
 
 class CheckButton extends Component {
   constructor(props) {
@@ -15,7 +14,7 @@ class CheckButton extends Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       dropdownOpen: false,
-      user_id: 1    // modify after user implementation
+      user_id: 1 // modify after user implementation
     };
   }
 
@@ -24,36 +23,40 @@ class CheckButton extends Component {
       dropdownOpen: !this.state.dropdownOpen
     });
   }
-  handleClick = event => {
+  updateCheck = event => {
     const data = {
       user_id: this.state.user_id
     };
     const part_id = this.props.part_id;
     const chap_id = this.props.chap_id;
+    //console.log(`https://kyomborr.herokuapp.com/` + part_id + "/" + chap_id);
 
-    axios.put(`https://kyomborr.herokuapp.com/`+ part_id + '/' + chap_id, { data })
+    axios
+      .put(
+        `https://kyomborr.herokuapp.com/api/kmles/` + part_id + "/" + chap_id,
+        {
+          data
+        }
+      )
       .then(res => {
         console.log(res);
         console.log(res.data);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
-
-  }
+  };
 
   render() {
     return (
       <ButtonDropdown
         className="float-right"
-        
-        
         isOpen={this.state.dropdownOpen}
         toggle={this.toggle}
       >
         <DropdownToggle caret outline color="info" size="sm"></DropdownToggle>
         <DropdownMenu>
-          <DropdownItem>Check</DropdownItem>
+          <DropdownItem onClick={this.updateCheck}>Check</DropdownItem>
           <DropdownItem divider />
           <DropdownItem>View Questions</DropdownItem>
         </DropdownMenu>

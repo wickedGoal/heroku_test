@@ -72,7 +72,7 @@ module.exports = function(app) {
   // UPDATE THE BOOK with new log, req.body = logTime, userId
   app.put("/api/kmles/:part_id/:chap_id", function(req, res) {
     Kmle.updateOne(
-      { part_id: 1, "chapter.chap_id": 1 },
+      { part_id: req.params.part_id, "chapter.chap_id": req.params.chap_id },
       {
         $push: {
           "chapter.$.logs": { $each: [req.body], $sort: { log_time: 1 } }
