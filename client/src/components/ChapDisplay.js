@@ -14,7 +14,7 @@ class ChapDisplay extends Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
-    this.state = { collapse: 0, cards: [1, 2, 3, 4, 5] };
+    this.state = { collapse: 0 };
   }
 
   toggle(e) {
@@ -30,7 +30,7 @@ class ChapDisplay extends Component {
 
   _renderPosts = () => {
     const { lists } = this.props;
-    const { cards, collapse } = this.state;
+    const { collapse } = this.state;
     //return posts.map(post => <div key={post.id}>{post.title}</div>);
     return (
       <div className="container">
@@ -43,7 +43,7 @@ class ChapDisplay extends Component {
               </CardHeader>
               <Collapse isOpen={collapse === curPart.part_id}>
                 <CardBody>
-                  <ListGroupDisplay lists={curPart.chapter} />
+                  <ListGroupDisplay lists={curPart.chapter} cur_part={curPart.part_id} />
                 </CardBody>
               </Collapse>
             </Card>
