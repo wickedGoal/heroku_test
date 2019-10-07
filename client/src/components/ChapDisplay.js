@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  Collapse,
-  CardBody,
-  Card,
-  CardHeader,
-  ListGroup,
-  ListGroupItem
-} from "reactstrap";
+import { Collapse, CardBody, Card, CardHeader } from "reactstrap";
 
 import ListGroupDisplay from "./ListGroupDisplay";
 
@@ -31,6 +24,7 @@ class ChapDisplay extends Component {
   _renderPosts = () => {
     const { lists } = this.props;
     const { collapse } = this.state;
+    const { refresh } = this.props;
     //return posts.map(post => <div key={post.id}>{post.title}</div>);
     return (
       <div className="container">
@@ -43,7 +37,11 @@ class ChapDisplay extends Component {
               </CardHeader>
               <Collapse isOpen={collapse === curPart.part_id}>
                 <CardBody>
-                  <ListGroupDisplay lists={curPart.chapter} cur_part={curPart.part_id} />
+                  <ListGroupDisplay
+                    lists={curPart.chapter}
+                    cur_part={curPart.part_id}
+                    refresh={refresh}
+                  />
                 </CardBody>
               </Collapse>
             </Card>

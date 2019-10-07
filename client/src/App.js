@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import CreateQuestion from "./components/create-question.component";
-import EditTodo from "./components/edit-todo.component";
+//import EditTodo from "./components/edit-todo.component";
 import ChaptersList from "./components/chapters-list.component";
 
 import logo from "./logo192.png";
@@ -14,31 +14,27 @@ class App extends Component {
       <Router>
         <div className="container">
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <a
-              className="navbar-brand"
-              href="https://codingthesmartway.com"
-              target="_blank"
-            >
+            <a className="navbar-brand" href="#">
               <img
                 src={logo}
                 width="30"
                 height="30"
-                alt="CodingTheSmartWay.com"
+                alt="Kyomborr.herokuapp.com"
               />
             </a>
             <Link to="/" className="navbar-brand">
-              MERN-Stack Todo App
+              For Kyom
             </Link>
             <div className="collpase navbar-collapse">
               <ul className="navbar-nav mr-auto">
                 <li className="navbar-item">
                   <Link to="/" className="nav-link">
-                    Todos
+                    Checklist
                   </Link>
                 </li>
                 <li className="navbar-item">
-                  <Link to="/create" className="nav-link">
-                    Create Todo
+                  <Link to="/questions" className="nav-link">
+                    Questions
                   </Link>
                 </li>
               </ul>
@@ -46,8 +42,7 @@ class App extends Component {
           </nav>
           <br />
           <Route path="/" exact component={ChaptersList} />
-          <Route path="/edit/:id" component={EditTodo} />
-          <Route path="/create" component={CreateQuestion} />
+          <Route path="/questions" component={CreateQuestion} />
         </div>
       </Router>
     );

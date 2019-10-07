@@ -6,12 +6,14 @@ import {
   DropdownItem
 } from "reactstrap";
 import axios from "axios";
+import { runInThisContext } from "vm";
 
 class CheckButton extends Component {
   constructor(props) {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+    this.updateCheck = this.updateCheck.bind(this);
     this.state = {
       dropdownOpen: false,
       user_id: 1 // modify after user implementation
@@ -41,6 +43,7 @@ class CheckButton extends Component {
       .then(res => {
         console.log(res);
         console.log(res.data);
+        this.props.refresh();
       })
       .catch(err => {
         console.log(err);

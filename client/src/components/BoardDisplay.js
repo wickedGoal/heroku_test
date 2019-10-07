@@ -1,14 +1,5 @@
 import React, { Component } from "react";
-import {
-  Collapse,
-  CardTitle,
-  CardText,
-  CardBody,
-  Card,
-  CardHeader,
-  ListGroup,
-  ListGroupItem
-} from "reactstrap";
+import { CardTitle, CardText, CardBody, Card } from "reactstrap";
 
 function Countdown() {
   var Dday = new Date(2020, 1, 3); // D-day(2017년 8월 30일)를 셋팅한다.
