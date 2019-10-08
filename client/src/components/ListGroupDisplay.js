@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { ListGroup, ListGroupItem, Badge, Tooltip } from "reactstrap";
+import {
+  ListGroup,
+  ListGroupItem,
+  Badge,
+  Popover,
+  PopoverBody
+} from "reactstrap";
 
 import CheckButton from "./CheckButton";
 
@@ -9,13 +15,13 @@ class ListGroupDisplay extends Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      tooltipOpen: false
+      popoverOpen: false
     };
   }
 
   toggle() {
     this.setState({
-      tooltipOpen: !this.state.tooltipOpen
+      popoverOpen: !this.state.popoverOpen
     });
   }
 
@@ -36,7 +42,28 @@ class ListGroupDisplay extends Component {
               {curChap.chap_id}. {curChap.chap_name}{" "}
               {curChap.logs.length > 0 && (
                 <span>
-                  <Badge color="info">{curChap.logs.length}</Badge>
+                  <Badge
+                    color="info"
+                    id={"badge" + cur_part + "-" + curChap.chap_id}
+                    alt={curChap.logs.map(log => {
+                      return log.log_time;
+                    })}
+                  >
+                    {curChap.logs.length}
+                  </Badge>
+                  <Popover
+                    placement="right"
+                    trigger="legacy"
+                    isOpen={this.state.popoverOpen}
+                    target={"badge" + cur_part + "-" + curChap.chap_id}
+                    toggle={this.toggle}
+                  >
+                    <PopoverBody>
+                      {curChap.logs.map(log => {
+                        return log.log_time;
+                      })}
+                    </PopoverBody>
+                  </Popover>
                 </span>
               )}
               <span>

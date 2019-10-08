@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  ButtonDropdown,
+  Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem
@@ -52,8 +52,9 @@ class CheckButton extends Component {
 
   render() {
     return (
-      <ButtonDropdown
+      <Dropdown
         className="float-right"
+        direction="left"
         isOpen={this.state.dropdownOpen}
         toggle={this.toggle}
       >
@@ -63,7 +64,7 @@ class CheckButton extends Component {
           <DropdownItem divider />
           <DropdownItem>View Questions</DropdownItem>
         </DropdownMenu>
-      </ButtonDropdown>
+      </Dropdown>
     );
   }
 }
