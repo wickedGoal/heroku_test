@@ -45,13 +45,14 @@ module.exports = function(app) {
       .sort({ part_id: 1, "chapter.chap_id": 1 })
       .exec(function(err, kmles) {
         if (err) return res.status(500).send({ error: "database failure" });
+        newkmles = [];
         kmles.forEach(function(doc) {
           doc.chapter = doc.chapter.filter(function(chap) {
             return chap.logs != null;
           });
-          res.json(doc);
+          newkmles = newkmles.concat(doc);
         });
-        //res.json(kmles);
+        res.json(newkmles);
       });
   });
 
