@@ -40,7 +40,7 @@ module.exports = function(app) {
 
   // GET studied chapters
 
-  app.get("/api/kmles/checked", function(req, res) {
+  app.get("/api/checked", function(req, res) {
     Kmle.find({ "chapter.logs": { $exists: true } })
       .sort({ part_id: 1, "chapter.chap_id": 1 })
       .forEach(function(doc) {
