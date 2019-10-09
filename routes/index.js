@@ -38,6 +38,23 @@ module.exports = function(app) {
     });
   });
 
+  // GET studied chapters
+
+  app.get("/api/kmles/checked", function(req, res) {
+    Kmle.find({ "chapter.logs": { $exists: true } })
+      .sort({ part_id: 1, "chapter.chap_id": 1 })
+      .forEach(function(doc) {
+        doc.chapter = doc.chapter.filter(function(chap) {
+          return chap.logs != null;
+        });
+        printjson(doc);
+      })
+      .exec(function(err, kmles) {
+        if (err) return res.status(500).send({ error: "database failure" });
+        res.json(kmles);
+      });
+  });
+
   /*
     // GET BOOK BY AUTHOR
     app.get('/api/books/author/:author', function(req, res){
