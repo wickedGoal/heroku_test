@@ -41,18 +41,33 @@ module.exports = function(app) {
   // GET studied chapters
 
   app.get("/api/checked", function(req, res) {
-    Kmle.find({ "chapter.logs": { $exists: true } })
+    //Kmle.find({ "chapter.logs": { $exists: true } })
+    Kmle.find({})
       .sort({ part_id: 1, "chapter.chap_id": 1 })
       .exec(function(err, kmles) {
         if (err) return res.status(500).send({ error: "database failure" });
-        newkmles = [];
+        
+        output=[];
+        //countChecked=[];        
+        allChap = 0;
+        checkedChap = 0;
         kmles.forEach(function(doc) {
+          totalChap = doc.chapter.length;
+          allChap = allChap + totalChap;
+
           doc.chapter = doc.chapter.filter(function(chap) {
-            return chap.logs != null;
-          });
-          newkmles = newkmles.concat(doc);
+            return chap.logs.length > 0;
+          });          
+          //newkmles = newkmles.concat(doc);
+          checkedChap = checkedChap + doc.chapter.length;
+
+          var data="{\""+doc.part_id+"."+doc.part_name+"\":\""+doc.chapter.length+"/"+totalChap+"\"}";
+          output = output.concat(JSON.parse(data));
         });
-        res.json(newkmles);
+        var totalStr = "{\"Total\":\""+checkedChap+"/"+allChap+"\"}";
+        output = output.concat(JSON.parse(totalStr));
+        console.log(output);
+        res.json(output);
       });
   });
 

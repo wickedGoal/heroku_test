@@ -17,6 +17,7 @@ export default class ChaptersList extends Component {
   onRefresh = () => {
     axios
       .get("https://kyomborr.herokuapp.com/api/kmles/")
+      //.get("http://localhost:5000/api/kmles/")
       .then(response => {
         this.setState({ chapters: response.data });
       })

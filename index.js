@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 const mongoose = require("mongoose");
+require('dotenv').config();
 const PORT = process.env.PORT || 5000;
 
 const kmle = require("./models/model_kmle");
