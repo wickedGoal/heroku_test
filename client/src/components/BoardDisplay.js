@@ -15,6 +15,7 @@ class BoardDisplay extends Component {
     super(props);
   }
   render() {
+    let remain = <Countdown />;
     return (
       <div>
         <Card>
@@ -22,10 +23,10 @@ class BoardDisplay extends Component {
             <CardTitle>
               <h3>
                 KMLE Study D-
-                <Countdown />
+                {remain}
               </h3>
             </CardTitle>
-            <CardText></CardText>
+            <CardText>{remain}</CardText>
           </CardBody>
         </Card>
       </div>

@@ -47,7 +47,7 @@ module.exports = function(app) {
       .exec(function(err, kmles) {
         if (err) return res.status(500).send({ error: "database failure" });
         
-        output=[];
+        output=JSON.parse("{\"List\":[]}");
         //countChecked=[];        
         allChap = 0;
         checkedChap = 0;
@@ -61,11 +61,15 @@ module.exports = function(app) {
           //newkmles = newkmles.concat(doc);
           checkedChap = checkedChap + doc.chapter.length;
 
-          var data="{\""+doc.part_id+"."+doc.part_name+"\":\""+doc.chapter.length+"/"+totalChap+"\"}";
-          output = output.concat(JSON.parse(data));
+          var data=JSON.parse("{\""+doc.part_id+"."+doc.part_name+"\":\""+doc.chapter.length+"/"+totalChap+"\"}");
+          output['List'].push(data);
+          //output = output.concat(JSON.parse(data));
         });
-        var totalStr = "{\"Total\":\""+checkedChap+"/"+allChap+"\"}";
-        output = output.concat(JSON.parse(totalStr));
+        
+        output["Total"] = allChap;
+        output["Checked"] = checkedChap;
+        output["Remaining"] =  allChap - checkedChap;
+        
         console.log(output);
         res.json(output);
       });

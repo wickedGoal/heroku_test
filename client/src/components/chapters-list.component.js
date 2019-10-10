@@ -7,20 +7,25 @@ import BoardDisplay from "./BoardDisplay";
 export default class ChaptersList extends Component {
   constructor(props) {
     super(props);
-    this.state = { chapters: [] };
+    this.state = { chapters: [], checkedList:[] };
     this.onRefresh = this.onRefresh.bind(this);
+    
   }
   componentDidMount() {
     this.onRefresh();
   }
 
+  
+
   onRefresh = () => {
     axios
-      .get("https://kyomborr.herokuapp.com/api/kmles/")
+      //.get("https://kyomborr.herokuapp.com/api/kmles/")
+      .all([axios.get("http://localhost:5000/api/kmles/"), axios.get("http://localhost:5000/api/checked/")])
       //.get("http://localhost:5000/api/kmles/")
-      .then(response => {
-        this.setState({ chapters: response.data });
-      })
+      .then(axios.spread(function(kmle,check){
+        this.setState({ chapters: kmle });
+        //this.setState({ checkedList: check });
+      }))      
       .catch(function(error) {
         console.log(error);
       });
@@ -29,7 +34,7 @@ export default class ChaptersList extends Component {
   render() {
     return (
       <div>
-        <BoardDisplay />
+        <BoardDisplay checked={this.state.checkedList}/>
         <ChapDisplay lists={this.state.chapters} refresh={this.onRefresh} />
       </div>
     );
