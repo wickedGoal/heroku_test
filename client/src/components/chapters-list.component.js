@@ -20,12 +20,17 @@ export default class ChaptersList extends Component {
   onRefresh = () => {
     axios
       //.get("https://kyomborr.herokuapp.com/api/kmles/")
-      .all([axios.get("http://localhost:5000/api/kmles/"), axios.get("http://localhost:5000/api/checked/")])
+      .get("http://localhost:5000/api/kmles/")
       //.get("http://localhost:5000/api/kmles/")
-      .then(axios.spread(function(kmle,check){
-        this.setState({ chapters: kmle });
-        //this.setState({ checkedList: check });
-      }))      
+      .then(res =>{
+        
+        this.setState({ chapters: res.data });
+        
+        return axios.get("http://localhost:5000/api/checked/");
+      })
+      .then(res=>{
+        this.setState({ checkedList: res.data });
+      })   
       .catch(function(error) {
         console.log(error);
       });

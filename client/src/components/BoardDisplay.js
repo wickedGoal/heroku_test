@@ -10,27 +10,43 @@ function Countdown() {
 
   return result;
 }
+
+
 class BoardDisplay extends Component {
   constructor(props) {
     super(props);
+    
   }
-  render() {
+  
+  renderBoard = () => {
+    const {checked} = this.props;
     let remain = <Countdown />;
+    //let str = Object.keys(checked).map((key) =>{
+//      return <div>{key} : {checked.list[key]}></div>;
+    //}   );
+
     return (
       <div>
-        <Card>
-          <CardBody>
-            <CardTitle>
-              <h3>
-                KMLE Study D-
-                {remain}
-              </h3>
-            </CardTitle>
-            <CardText>{remain}</CardText>
-          </CardBody>
-        </Card>
-      </div>
+      <Card>
+        <CardBody>
+          <CardTitle>
+            <h3>
+              KMLE Study D-
+              {remain}
+            </h3>
+          </CardTitle>
+          <CardText></CardText>
+        </CardBody>
+      </Card>
+    </div>
+
+    
     );
+  }
+
+  render() {
+    
+    return this.renderBoard();
   }
 }
 
