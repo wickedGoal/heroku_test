@@ -11,41 +11,48 @@ function Countdown() {
   return result;
 }
 
-
 class BoardDisplay extends Component {
   constructor(props) {
     super(props);
-    
   }
-  
+
   renderBoard = () => {
-    const {checked} = this.props;
-    let remain = <Countdown />;
+    const { checked } = this.props;
+    // let remain = <Countdown />;
+    let rem = Countdown();
+
     //let str = Object.keys(checked).map((key) =>{
-//      return <div>{key} : {checked.list[key]}></div>;
+    //      return <div>{key} : {checked.list[key]}></div>;
     //}   );
+    let str = JSON.stringify(checked.List);
+    let chapToStudy = Math.ceil(checked.Remaining / rem);
+    //console.log(parseInt(checked.Remaining));
+    //console.log(parseInt(remain));
 
     return (
       <div>
-      <Card>
-        <CardBody>
-          <CardTitle>
-            <h3>
-              KMLE Study D-
-              {remain}
-            </h3>
-          </CardTitle>
-          <CardText></CardText>
-        </CardBody>
-      </Card>
-    </div>
-
-    
+        <Card>
+          <CardBody>
+            <CardTitle className="heading">
+              <h3>
+                KMLE Study D-
+                {rem}
+              </h3>
+            </CardTitle>
+            <CardText>
+              <div>{str}</div>
+              <div>
+                {checked.Checked} / {checked.Total} chapters checked
+              </div>
+              <div>{chapToStudy} chapters to study per day</div>
+            </CardText>
+          </CardBody>
+        </Card>
+      </div>
     );
-  }
+  };
 
   render() {
-    
     return this.renderBoard();
   }
 }
