@@ -25,7 +25,8 @@ class BoardDisplay extends Component {
     //      return <div>{key} : {checked.list[key]}></div>;
     //}   );
     let str = JSON.stringify(checked.List);
-    //let strFil = str.replace("[{", "");
+    
+    //let strFil = str.replace(new RegExp(/\[/g), "");
     let chapToStudy = Math.ceil(checked.Remaining / rem);
     //console.log(parseInt(checked.Remaining));
     //console.log(parseInt(remain));
