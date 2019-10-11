@@ -25,6 +25,7 @@ class BoardDisplay extends Component {
     //      return <div>{key} : {checked.list[key]}></div>;
     //}   );
     let str = JSON.stringify(checked.List);
+    //let strFil = str.replace("[{", "");
     let chapToStudy = Math.ceil(checked.Remaining / rem);
     //console.log(parseInt(checked.Remaining));
     //console.log(parseInt(remain));
@@ -41,9 +42,13 @@ class BoardDisplay extends Component {
             </CardTitle>
             <CardText>
               <div>{str}</div>
+              <p></p>
+              
+              <p></p>
               <div>
-                {checked.Checked} / {checked.Total} chapters checked
+                <strong>{checked.Checked} / {checked.Total}</strong> chapters checked
               </div>
+              <p></p>
               <div>{chapToStudy} chapters to study per day</div>
             </CardText>
           </CardBody>
