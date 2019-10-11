@@ -97,10 +97,11 @@ class CheckButton extends Component {
     axios
       .post(
         `https://kyomborr.herokuapp.com/api/questions`,
+        //`http://localhost:5000/api/questions`,
         {
           data
-        },
-        { headers: { "Content-type": "application/json" } }
+        }
+        //{ headers: { "Content-type": "application/json" } }
       )
       .then(res => {
         console.log(res.data);

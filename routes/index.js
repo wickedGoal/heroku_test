@@ -46,9 +46,9 @@ module.exports = function(app) {
       .sort({ part_id: 1, "chapter.chap_id": 1 })
       .exec(function(err, kmles) {
         if (err) return res.status(500).send({ error: "database failure" });
-        
-        output=JSON.parse("{\"List\":[]}");
-        //countChecked=[];        
+
+        output = JSON.parse('{"List":[]}');
+        //countChecked=[];
         allChap = 0;
         checkedChap = 0;
         kmles.forEach(function(doc) {
@@ -57,19 +57,29 @@ module.exports = function(app) {
 
           doc.chapter = doc.chapter.filter(function(chap) {
             return chap.logs.length > 0;
-          });          
+          });
           //newkmles = newkmles.concat(doc);
           checkedChap = checkedChap + doc.chapter.length;
 
-          var data=JSON.parse("{\""+doc.part_id+"."+doc.part_name+"\":\""+doc.chapter.length+"/"+totalChap+"\"}");
-          output['List'].push(data);
+          var data = JSON.parse(
+            '{"' +
+              doc.part_id +
+              "." +
+              doc.part_name +
+              '":"' +
+              doc.chapter.length +
+              "/" +
+              totalChap +
+              '"}'
+          );
+          output["List"].push(data);
           //output = output.concat(JSON.parse(data));
         });
-        
+
         output["Total"] = allChap;
         output["Checked"] = checkedChap;
-        output["Remaining"] =  allChap - checkedChap;
-        
+        output["Remaining"] = allChap - checkedChap;
+
         console.log(output);
         res.json(output);
       });
@@ -212,7 +222,8 @@ module.exports = function(app) {
 
   // Add Question
   app.post("/api/questions", function(req, res) {
-    var question = new Question(req.body);
+    console.log(req);
+    var question = new Question(req.body.data);
     console.log(question);
     /*
     var question = new Question();
