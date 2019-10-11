@@ -213,6 +213,7 @@ module.exports = function(app) {
   // Add Question
   app.post("/api/questions", function(req, res) {
     var question = new Question(req.body);
+    console.log(question);
     /*
     var question = new Question();
     question.part_id = req.body.part_id;

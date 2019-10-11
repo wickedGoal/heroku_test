@@ -48,13 +48,13 @@ export default class CreateQuestion extends Component {
     console.log(`Answer: ${this.state.q_Answer}`);
 
     const newQuestion = {
-      q_Question: this.state.q_Question,
-      q_Answer: this.state.q_Answer,
-      q_Part: this.state.q_Part,
-      q_Chapter: this.state.q_Chapter,
-      q_Comment1: this.state.q_Comment1,
-      q_Comment2: this.state.q_Comment2,
-      q_Logs: { userId: 1 } // userId needs to be edited with props
+      question: this.state.q_Question,
+      answer: this.state.q_Answer,
+      part_id: this.state.q_Part,
+      chap_id: this.state.q_Chapter,
+      comment1: this.state.q_Comment1,
+      comment2: this.state.q_Comment2,
+      logs: { user_id: 1 } // userId needs to be edited with props
     };
 
     axios
@@ -95,6 +95,10 @@ export default class CreateQuestion extends Component {
               <option>3</option>
               <option>4</option>
               <option>5</option>
+              <option>6</option>
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
             </Input>
           </FormGroup>
           <FormGroup>

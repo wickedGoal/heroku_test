@@ -15,6 +15,7 @@ class ListGroupDisplay extends Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
+    this._getTimeString = this._getTimeString.bind(this);
     this.state = {
       popoverOpen: false
     };
@@ -51,9 +52,9 @@ class ListGroupDisplay extends Component {
                   <Badge
                     color="info"
                     id={"badge" + cur_part + "-" + curChap.chap_id}
-                    alt={curChap.logs.map(log => {
-                      return log.log_time;
-                    })}
+                    //alt={curChap.logs.map(log => {
+                    //  return log.log_time;
+                    //})}
                   >
                     {curChap.logs.length}
                   </Badge>
@@ -76,6 +77,7 @@ class ListGroupDisplay extends Component {
                 <CheckButton
                   part_id={cur_part}
                   chap_id={curChap.chap_id}
+                  chap_name={curChap.chap_name}
                   refresh={refresh}
                 />
               </span>
