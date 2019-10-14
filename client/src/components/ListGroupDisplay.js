@@ -6,7 +6,8 @@ import {
   Popover,
   PopoverBody
 } from "reactstrap";
-import moment from "moment"
+import Moment from "react-moment";
+//import "moment-timezone";
 
 import CheckButton from "./CheckButton";
 
@@ -15,7 +16,6 @@ class ListGroupDisplay extends Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
-    this._getTimeString = this._getTimeString.bind(this);
     this.state = {
       popoverOpen: false
     };
@@ -31,9 +31,6 @@ class ListGroupDisplay extends Component {
     return <div>Error occurs! Please try again.</div>;
   };
 
-  _getTimeString = (str) => {
-    return moment(str, "YY/MM/DD HH:mm");
-  }
 
   _renderPosts = () => {
     const { lists } = this.props;
@@ -67,7 +64,7 @@ class ListGroupDisplay extends Component {
                   >
                     <PopoverBody>
                       {curChap.logs.map(log => {
-                        return log.log_time;
+                        return <div><Moment format="YY/MM/DD HH:mm">{log.log_time}</Moment></div>;
                       })}
                     </PopoverBody>
                   </Popover>

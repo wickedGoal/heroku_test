@@ -1,25 +1,19 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Collapse, CardBody, Card, CardHeader } from "reactstrap";
+import {Button, ButtonGroup} from "reactstrap";
+
+import QuestionCardDisplay from "./QuestionCardDisplay";
 
 export default class ViewQuestion extends Component {
   constructor(props) {
     super(props);
-    this.state = { questionList: [] };
-    this.onViewQuestion = this.onViewQuestion.bind(this);
-    this.toggle = this.toggle.bind(this);
-    this.state = { collapse: 0, questionList : []};
+    this.state = { questionList: [], daysPast:0 };
+    this.onViewQuestion = this.onViewQuestion.bind(this);    
+    this.handleDaysButtonClick = this.handleDaysButtonClick.bind(this);
   }
 
   componentDidMount() {
     this.onViewQuestion();
-  }
-
-  toggle(e) {
-    let event = e.target.dataset.event;
-    this.setState({
-      collapse: this.state.collapse === Number(event) ? 0 : Number(event)
-    });
   }
 
   
@@ -34,28 +28,25 @@ export default class ViewQuestion extends Component {
       });
   }
 
+  handleDaysButtonClick = (e) => {
+    let event = e.target.dataset.event;
+    this.setState({
+      daysPast: Number(event)
+    });
+  }
+
   render() {
-    const { questionList } = this.state;
-    const { collapse } = this.state;
 
     return (
-      <div className="container">
-      <p></p>
-      {questionList.map((curQuestion, index) => {
-        return (
-          <Card style={{ marginBottom: "1rem" }} key={index+1}>
-            <CardHeader onClick={this.toggle} data-event={index+1}>
-              {curQuestion.question}
-            </CardHeader>
-            <Collapse isOpen={collapse === index+1}>
-              <CardBody>
-                {curQuestion.answer}
-              </CardBody>
-            </Collapse>
-          </Card>
-        );
-      })}
-    </div>
+      <div>
+        <ButtonGroup size="lg">
+          <Button onClick={this.handleDaysButtonClick} data-event="1">Over 1day</Button>
+          <Button onClick={this.handleDaysButtonClick} data-event="7">Over 1week</Button>
+          <Button onClick={this.handleDaysButtonClick} data-event="28">Over 1month</Button>
+          <Button onClick={this.handleDaysButtonClick} data-event="0">All</Button>
+        </ButtonGroup>
+      <QuestionCardDisplay questionList={this.state.questionList} days={this.state.daysPast}></QuestionCardDisplay>
+      </div>
     );
   }
 }
